@@ -33,10 +33,13 @@ sub startup
 package main;
 
 use Mojo::Base -strict;
-use Test::More tests => 16;
+use Test::More tests => 17;
 use Test::Mojo;
 
 $ENV{MOJO_LOG_LEVEL} = 'debug';
+
+eval { App->new(options => { level => 'bad' }) };
+like($@, qr/unknown log level 'bad'/);
 
 my $t = Test::Mojo->new(App->new);
 $t->get_ok('/')->content_like(qr|debug: GET / {}|, 'no params logged');

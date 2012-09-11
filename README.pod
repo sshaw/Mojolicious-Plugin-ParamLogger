@@ -14,12 +14,12 @@ Mojolicious::Plugin::ParamLogger - Log request parameters
 
 =head1 DESCRIPTION
 
-C<Mojolicious> doesn't log request parameters. Of course -depending on your setup-
-they may be logged elsewhere but, when in development, I use C<morbo> and C<morbo>
-does't log them either (same goes for C<hypnotoad>).
-
 This module automatically logs request parameters while in development mode. 
 See L</OPTIONS> for details. 
+
+C<Mojolicious> doesn't log request parameters. Of course -depending on your setup-
+they may be logged elsewhere but, when in development, I use C<morbo> and C<morbo>
+doesn't log them (same goes for C<hypnotoad>).
 
 =head1 OPTIONS
 

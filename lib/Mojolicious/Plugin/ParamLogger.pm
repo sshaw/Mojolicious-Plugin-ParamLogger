@@ -17,7 +17,7 @@ sub register
   
   my $params = $options->{filter} || ['password'];
   $params = [ $params ] if ref $params ne 'ARRAY';
-  
+
   my %filter;
   @filter{@$params} = (1) x @$params;
 
@@ -36,10 +36,15 @@ sub register
 	  }
       }
       
-      my $messgae = sprintf '%s %s%s', $c->req->method, 
-      				       $c->req->url->path || '/', 
-				       Data::Dumper->new([$params])->Terse(1)->Indent(0)->Useqq(1)->Pad(' ')->Dump;
-      $c->app->log->$level($messgae);
+      my $path = $c->req->url->path;
+      $path = "/$path" if index($path, '/') != 0; # Mojo doesn't always add the slash
+
+      my $message = sprintf '%s %s%s', $c->req->method, $path, Data::Dumper->new([$params])->Terse(1)->Indent(0)->Useqq(1)->Pad(' ')->Dump;
+      eval { $c->app->log->$level($message) };
+      if($@) {
+	  $c->render_exception($@);
+	  return;
+      }      
   });
 }
 
@@ -63,12 +68,12 @@ Mojolicious::Plugin::ParamLogger - Log request parameters
 
 =head1 DESCRIPTION
 
-C<Mojolicious> doesn't log request parameters. Of course -depending on your setup-
-they may be logged elsewhere but, when in development, I use C<morbo> and C<morbo>
-does't log them either (same goes for C<hypnotoad>).
-
 This module automatically logs request parameters while in development mode. 
 See L</OPTIONS> for details. 
+
+C<Mojolicious> doesn't log request parameters. Of course -depending on your setup-
+they may be logged elsewhere but, when in development, I use C<morbo> and C<morbo>
+doesn't log them (same goes for C<hypnotoad>).
 
 =head1 OPTIONS
 

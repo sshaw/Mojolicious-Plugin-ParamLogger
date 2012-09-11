@@ -7,7 +7,7 @@ WriteMakefile(
   NAME         => 'Mojolicious::Plugin::ParamLogger',
   VERSION_FROM => 'lib/Mojolicious/Plugin/ParamLogger.pm',
   AUTHOR       => 'Skye Shaw',
-  PREREQ_PM    => {'Mojolicious' => 2},
+  PREREQ_PM    => {'Mojolicious' => '2.15'},
   test         => {TESTS => 't/*.t'},
   (eval { ExtUtils::MakeMaker->VERSION(6.46) } ?
      (META_MERGE  => { resources => { bugtracker => 'http://github.com/sshaw/Mojolicious-Plugin-ParamLogger/issues',
