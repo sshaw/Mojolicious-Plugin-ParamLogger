@@ -56,7 +56,7 @@ $t = Test::Mojo->new(App->new(options => { level => 'info' }));
 $t->get_ok('/')->content_like(qr|info: GET / {}|, 'log level');
 
 $t = Test::Mojo->new(App->new(mode => 'production'));
-$t->get_ok('/')->content_unlike(qr|debug: GET / {}|, 'disabled for production');
+$t->get_ok('/')->content_unlike(qr|info: GET / {}|, 'disabled for production');
 
-$t = Test::Mojo->new(App->new(mode => 'mymode', options => { mymode => 1 }));
-$t->get_ok('/')->content_like(qr|debug: GET / {}|, 'enabled for given mode');
+$t = Test::Mojo->new(App->new(mode => 'production', options => { production => 1 }));
+$t->get_ok('/')->content_like(qr|info: GET / {}|, 'enabled for production');

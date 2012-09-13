@@ -12,7 +12,12 @@ sub register
   my ($self, $app, $options) = @_;
   return unless $app->mode eq 'development' or $options->{$app->mode};
 
-  my $level = $options->{level} || 'debug';
+  my $level = $options->{level};
+  if(!$level) { 
+      # By default debug level is suppressed in production
+      $level = $app->mode eq 'production' ? 'info' : 'debug';
+  }
+
   croak "unknown log level '$level'" unless $app->log->can($level);
   
   my $params = $options->{filter} || ['password'];
@@ -88,7 +93,7 @@ Parmeter values to exclude from the log. Defaults to C<'password'>.
 
   $self->plugin('ParamLogger', level => 'info')
 
-Log the request parameters at the given log level. Defaults to C<'debug'>.
+Log the request parameters at the given log level. Defaults to C<'info'> in production, C<'debug'> everywhere else.
 See L<Mojo::Log/level> for a list of log levels.
 
 =head2 C<mode>
@@ -103,6 +108,8 @@ L<Mojolicious>, L<Mojo::Log>
 
 =head1 LICENSE
 
-Copyright (c) 2012 Skye Shaw. This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+Copyright (c) 2012 Skye Shaw. 
+
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
 
 =cut
