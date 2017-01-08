@@ -5,21 +5,21 @@ use Mojo::Base 'Mojolicious::Plugin';
 use Carp;
 use Data::Dumper ();
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
-sub register 
+sub register
 {
   my ($self, $app, $options) = @_;
   return unless $app->mode eq 'development' or $options->{$app->mode};
 
   my $level = $options->{level};
-  if(!$level) { 
+  if(!$level) {
       # By default debug level is suppressed in production
       $level = $app->mode eq 'production' ? 'info' : 'debug';
   }
 
   croak "unknown log level '$level'" unless $app->log->can($level);
-  
+
   my $params = $options->{filter} || ['password'];
   $params = [ $params ] if ref $params ne 'ARRAY';
 
