@@ -57,11 +57,13 @@ sub register
 
 __END__
 
-=pod 
+=pod
 
 =head1 NAME
 
 Mojolicious::Plugin::ParamLogger - Log request parameters
+
+=for html <a href="https://travis-ci.org/sshaw/Mojolicious-Plugin-ParamLogger"><img src="https://travis-ci.org/sshaw/Mojolicious-Plugin-ParamLogger.svg?branch=master"></a>
 
 =head1 SYNOPSIS
 
